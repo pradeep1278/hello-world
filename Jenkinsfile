@@ -28,18 +28,27 @@ pipeline {
         }
        
         stage('Image Build') {
-      environment {
-        DOCKERHUB_CREDS = credentials('dockerregistrylogin')
-      }
-      steps {
-        container('docker') {
-          // Build new image
-          
-          sh "docker build -t pradeep1278/argocd-demo:${env.GIT_COMMIT} ."
-          // Publish new image
-          sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW && docker push pradeep1278/argocd-demo:${env.GIT_COMMIT}"
+            environment {
+           registry = "dockerregistrylogin/test"
+             registryCredential = 'dockerregistrylogin'
+            }
+            steps{
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
         }
       }
+     // environment {
+        //DOCKERHUB_CREDS = credentials('dockerregistrylogin')
+     // }
+     // steps {
+       // container('docker') {
+          // Build new image
+          
+        //  sh "docker build -t pradeep1278/argocd-demo:${env.GIT_COMMIT} ."
+          // Publish new image
+         // sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW && docker push pradeep1278/argocd-demo:${env.GIT_COMMIT}"
+       // }
+     // }
     }
 
     stage('Deploy E2E') {
