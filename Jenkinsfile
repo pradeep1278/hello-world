@@ -26,7 +26,7 @@ pipeline {
                 
     }
         }
-        # 
+       
         stage('Image Build') {
       environment {
         DOCKERHUB_CREDS = credentials('dockerregistrylogin')
@@ -70,7 +70,7 @@ pipeline {
       }
     }
         
-        #
+       
     }
 
     post {
