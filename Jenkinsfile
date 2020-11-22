@@ -36,8 +36,8 @@ pipeline {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            app.push("${env.BUILD_NUMBER}")
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerregistrylogin') {
+            app.push("${env.GIT_COMMIT}")
             app.push("latest")
         }
     }
@@ -54,7 +54,7 @@ pipeline {
          // sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW && docker push pradeep1278/argocd-demo:${env.GIT_COMMIT}"
        // }
      // }
-    }
+    //}
 
     stage('Deploy E2E') {
       environment {
