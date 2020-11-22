@@ -2,7 +2,7 @@
 
 pipeline {
     agent any
-
+    def app
     tools {
         maven "M2_HOME" // You need to add a maven with name "3.6.0" in the Global Tools Configuration page
     }
@@ -28,16 +28,21 @@ pipeline {
         }
        
         stage('Image Build') {
-            environment {
-           registry = "dockerregistrylogin/test"
-             registryCredential = 'dockerregistrylogin'
-            }
-            steps{
-        script {
-          docker.build registry + ":$BUILD_NUMBER"
+            
+             app = docker.build("getintodevops/hellonode")
+    }
+     stage('Push image') {
+        /* Finally, we'll push the image with two tags:
+         * First, the incremental build number from Jenkins
+         * Second, the 'latest' tag.
+         * Pushing multiple tags is cheap, as all the layers are reused. */
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
         }
-      }
-     // environment {
+    }
+        
+        // environment {
         //DOCKERHUB_CREDS = credentials('dockerregistrylogin')
      // }
      // steps {
