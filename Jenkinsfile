@@ -16,9 +16,8 @@ pipeline {
         }
     
     stage("Image creation") {
-            steps {
-    
-    sshPublisher(publishers: [sshPublisherDesc(configName: 'rpak8worker01', 
+            steps {    
+    sshPublisher(publishers: [sshPublisherDesc(configName: 'rpak8sworker01', 
     transfers: [sshTransfer(excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: '**/target/*.war')], 
                                                   usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
     
