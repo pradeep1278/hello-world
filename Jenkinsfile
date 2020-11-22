@@ -34,7 +34,7 @@ pipeline {
       steps {
         //container('docker') {
           // Build new image
-          sh "until docker ps; do sleep 3; done && docker build -t pradeep1278/argocd-demo:${env.GIT_COMMIT} ."
+          sh "docker build -t pradeep1278/argocd-demo:${env.GIT_COMMIT} ."
           // Publish new image
           sh "docker login --username pradeep.kumar@sita.aero --password Kalu@2014 && docker push pradeep1278/argocd-demo:${env.GIT_COMMIT}"
        // }
