@@ -38,7 +38,7 @@ pipeline {
         
   stage('Building image') {
     steps{
-      sh 'docker build -t pradeep1278/test:${env.GIT_COMMIT} .'
+      sh "docker build -t pradeep1278/test:${env.GIT_COMMIT} ."
      // script {
        // docker.build registry + ":${env.GIT_COMMIT}"
       //}
