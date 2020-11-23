@@ -3,7 +3,7 @@
 pipeline {  
   environment {
     registry = "dockerregistrylogin/test"
-    registryCredential = ‘dockerregistrylogin’
+    registryCredential = "dockerregistrylogin"
     dockerImage = ''
 }
      agent any
