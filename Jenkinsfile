@@ -48,9 +48,9 @@ pipeline {
        // container('docker') {
           // Build new image
           
-         sh "docker build -t dockerregistrylogin/argocd-demo:${env.GIT_COMMIT} . -v $(which docker):/usr/bin/docker"
+         sh "/usr/bin/docker build -t dockerregistrylogin/argocd-demo:${env.GIT_COMMIT} ."
           // Publish new image
-          sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW -v $(which docker):/usr/bin/docker  && docker push dockerregistrylogin/argocd-demo:${env.GIT_COMMIT} -v $(which docker):/usr/bin/docker"
+          sh "/usr/bin/docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW   && /usr/bin/docker push dockerregistrylogin/argocd-demo:${env.GIT_COMMIT}"
         }
       }
     //}
