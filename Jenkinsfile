@@ -16,7 +16,7 @@ pipeline {
             steps {
                 sh "ssh -V"
                 sh "mvn -version"
-                sh "mvn clean install"
+                sh "mvn clean install package"
             }
         }
     }
