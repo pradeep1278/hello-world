@@ -5,6 +5,7 @@ pipeline {
     registry = "dockerregistrylogin/test"
     registryCredential = "dockerregistrylogin"
     dockerImage = ''
+    USER root
 }
      agent any
     tools {
