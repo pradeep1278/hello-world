@@ -4,8 +4,7 @@ pipeline {
   environment {
     registry = "dockerregistrylogin/test"
     registryCredential = "dockerregistrylogin"
-    dockerImage = ''
-    USER root
+    dockerImage = ''   
 }
      agent any
     tools {
@@ -39,9 +38,10 @@ pipeline {
         
   stage('Building image') {
     steps{
-      script {
-        docker.build registry + ":${env.GIT_COMMIT}"
-      }
+      sh 'docker build -t pradeep1278/test:${env.GIT_COMMIT} .'
+     // script {
+       // docker.build registry + ":${env.GIT_COMMIT}"
+      //}
     }
   }
 
