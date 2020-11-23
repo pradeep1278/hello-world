@@ -2,7 +2,11 @@
 
 pipeline {
     agent any
-    def app
+  environment {
+    registry = "dockerregistrylogin/test"
+    registryCredential = 'dockerregistrylogin'
+    dockerImage = ''
+    }
     tools {
         maven "M2_HOME" // You need to add a maven with name "3.6.0" in the Global Tools Configuration page
     }
@@ -27,20 +31,28 @@ pipeline {
     }
         }
        
-        stage('Image Build') {
-            
-             app = docker.build("getintodevops/hellonode")
-    }
-     stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerregistrylogin') {
-            app.push("${env.GIT_COMMIT}")
-            app.push("latest")
+      stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
+      }
     }
+  stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    } 
+        
+        
+        
+        
+        //stage('Image Build') {
+            
         
         // environment {
         //DOCKERHUB_CREDS = credentials('dockerregistrylogin')
