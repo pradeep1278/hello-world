@@ -1,7 +1,11 @@
 #!groovy
 
 pipeline {  
-  
+  environment {
+    registry = "dockerregistrylogin/test"
+    registryCredential = ‘dockerregistrylogin’
+    dockerImage = ''
+}
      agent any
     tools {
         maven "M2_HOME" // You need to add a maven with name "3.6.0" in the Global Tools Configuration page
@@ -32,19 +36,23 @@ pipeline {
         
         
         
-  stage('Image Build') {        
-        
-         environment {
-        DOCKERHUB_CREDS = credentials('dockerregistrylogin')
-                    }
-        steps {       
-          
-         sh "/usr/bin/docker build -t dockerregistrylogin/argocd-demo:${env.GIT_COMMIT} ."
-          // Publish new image
-          //sh "/usr/bin/docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW   && /usr/bin/docker push dockerregistrylogin/argocd-demo:${env.GIT_COMMIT}"
+  stage('Building image') {
+    steps{
+      script {
+        docker.build registry + ":${env.GIT_COMMIT}"
+      }
+    }
+  }
+
+stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
         }
       }
-
+    }
     stage('Deploy E2E') {
       environment {
         GIT_CREDS = credentials('git')
