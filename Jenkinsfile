@@ -28,26 +28,22 @@ pipeline {
         }
        
     
-    } 
+  //  } 
         
         
         
-        
-        stage('Image Build') {        
+  stage('Image Build') {        
         
          environment {
         DOCKERHUB_CREDS = credentials('dockerregistrylogin')
                     }
-        steps {
-       // container('docker') {
-          // Build new image
+        steps {       
           
          sh "/usr/bin/docker build -t dockerregistrylogin/argocd-demo:${env.GIT_COMMIT} ."
           // Publish new image
           sh "/usr/bin/docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW   && /usr/bin/docker push dockerregistrylogin/argocd-demo:${env.GIT_COMMIT}"
         }
       }
-    //}
 
     stage('Deploy E2E') {
       environment {
@@ -86,4 +82,4 @@ pipeline {
             cleanWs()
         }
     }
-//}
+}
