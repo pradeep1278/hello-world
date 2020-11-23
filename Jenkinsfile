@@ -28,7 +28,7 @@ pipeline {
      
       script {
         
-       docker.build registry + ":${env.GIT_COMMIT}"
+       dockerImage =docker.build registry + ":${env.GIT_COMMIT}"
       }
     }
   }
@@ -37,7 +37,7 @@ stage('Deploy Image') {
       steps{
         script {
           docker.withRegistry( '', registryCredential ) {
-            docker.push()
+            dockerImage.push()
           }
         }
       }
