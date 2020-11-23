@@ -41,7 +41,7 @@ pipeline {
           
          sh "/usr/bin/docker build -t dockerregistrylogin/argocd-demo:${env.GIT_COMMIT} ."
           // Publish new image
-          sh "/usr/bin/docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW   && /usr/bin/docker push dockerregistrylogin/argocd-demo:${env.GIT_COMMIT}"
+          //sh "/usr/bin/docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW   && /usr/bin/docker push dockerregistrylogin/argocd-demo:${env.GIT_COMMIT}"
         }
       }
 
