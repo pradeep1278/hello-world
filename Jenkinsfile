@@ -1,12 +1,7 @@
 #!groovy
 
-pipeline {
-   
-  environment {
-    registry = "dockerregistrylogin/test"
-    registryCredential = 'dockerregistrylogin'
-    dockerImage = ''
-    }
+pipeline {  
+  
      agent any
     tools {
         maven "M2_HOME" // You need to add a maven with name "3.6.0" in the Global Tools Configuration page
@@ -38,13 +33,12 @@ pipeline {
         
         
         
-        stage('Image Build') {
-            
+        stage('Image Build') {        
         
          environment {
         DOCKERHUB_CREDS = credentials('dockerregistrylogin')
-      }
-      steps {
+                    }
+        steps {
        // container('docker') {
           // Build new image
           
