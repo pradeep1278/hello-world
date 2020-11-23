@@ -41,7 +41,7 @@ pipeline {
     steps{
      
       script {
-        cd /root
+        sh "cd /root"
        docker.build registry + ":${env.GIT_COMMIT}"
       }
     }
