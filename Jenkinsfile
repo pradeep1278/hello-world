@@ -32,41 +32,27 @@ pipeline {
     }
         }
        
-      stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
-  stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
+    
     } 
         
         
         
         
-        //stage('Image Build') {
+        stage('Image Build') {
             
         
-        // environment {
-        //DOCKERHUB_CREDS = credentials('dockerregistrylogin')
-     // }
-     // steps {
+         environment {
+        DOCKERHUB_CREDS = credentials('dockerregistrylogin')
+      }
+      steps {
        // container('docker') {
           // Build new image
           
-        //  sh "docker build -t pradeep1278/argocd-demo:${env.GIT_COMMIT} ."
+         sh "docker build -t dockerregistrylogin/argocd-demo:${env.GIT_COMMIT} . -v $(which docker):/usr/bin/docker"
           // Publish new image
-         // sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW && docker push pradeep1278/argocd-demo:${env.GIT_COMMIT}"
-       // }
-     // }
+          sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW -v $(which docker):/usr/bin/docker  && docker push dockerregistrylogin/argocd-demo:${env.GIT_COMMIT} -v $(which docker):/usr/bin/docker"
+        }
+      }
     //}
 
     stage('Deploy E2E') {
