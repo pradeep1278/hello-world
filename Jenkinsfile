@@ -2,7 +2,7 @@
 
 pipeline {  
   environment {
-    registry = "dockerregistrylogin/docker-test"
+    registry = "10.101.209.206:8761/dockertest"
     registryCredential = "dockerhub"
     dockerImage = ''   
 }
