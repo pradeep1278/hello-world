@@ -27,8 +27,7 @@ pipeline {
       script {
         
        dockerImage =docker.build registry + ":${env.GIT_COMMIT}"
-        docker.withRegistry( '10.101.209.206:8761', registryCredential ) {
-          dockerImage.push()}
+        
       }
     }
   }
@@ -36,8 +35,8 @@ pipeline {
 stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
+         docker.withRegistry( '10.101.209.206:8761', registryCredential ) {
+          dockerImage.push()}
           }
         }
       }
