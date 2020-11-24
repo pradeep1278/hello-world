@@ -29,6 +29,8 @@ pipeline {
       script {
         
        dockerImage =docker.build registry + ":${env.GIT_COMMIT}"
+        docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
       }
     }
   }
