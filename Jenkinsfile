@@ -26,12 +26,12 @@ pipeline {
         DOCKERHUB_CREDS = credentials('dockerhub')
       }
       steps {
-       
+         container('docker') {
           // Build new image
-          sh "docker build -t 10.101.209.206:8761/dockertest:${env.GIT_COMMIT} ."
+          sh "until docker ps; do sleep 3; done && docker build -t 10.101.209.206:8761/dockertest:${env.GIT_COMMIT} ."
           // Publish new image
-          sh "docker login -u testuser -p testpassword && docker push 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
-       
+          sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW && docker push 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
+         }
       }
     }
        
