@@ -37,7 +37,7 @@ stage('Deploy Image') {
         script {
          docker.withRegistry( '10.101.209.206:8761', registryCredential ) {
           dockerImage.push()}
-          }
+         // }
         }
       }
     }
