@@ -51,11 +51,11 @@ stage('Push Image') {
       steps {
         input message:'Approve deployment?'
         
-          sh "git clone https://$GIT_CREDS_USR:$GIT_CREDS_PSW@github.com/alexmt/argocd-demo-deploy.git"
+          sh "git clone https://$GIT_CREDS_USR:$GIT_CREDS_PSW@github.com/pradeep1278/argocd-demo-deploy.git"
           sh "git config --global user.email 'ci@ci.com'"
 
           dir("argocd-demo-deploy") {
-            sh "cd ./e2e && kustomize edit set image alexmt/argocd-demo:${env.GIT_COMMIT}"
+            sh "cd ./e2e && kustomize edit set image 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
             sh "git commit -am 'Publish new version' && git push || echo 'no changes'"
           }
         
