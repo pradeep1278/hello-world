@@ -20,30 +20,23 @@ pipeline {
             }
         }
     
-        
-        
-        
-  stage('Building image') {
-    steps{
      
-      script {
-        
-       dockerImage =docker.build registry + ":${env.GIT_COMMIT}"
-        docker.withRegistry( '', registryCredential ) {
-          dockerImage.push()}
+       stage('BuildImage') {
+      environment {
+        DOCKERHUB_CREDS = credentials('dockerhub')
+      }
+      steps {
+       
+          // Build new image
+          sh "docker build -t 10.101.209.206:8761/dockertest:${env.GIT_COMMIT} ."
+          // Publish new image
+          sh "docker login -u testuser -p testpassword && docker push 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
+       
       }
     }
-  }
-
-stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
+       
+       
+    
     stage('Deploy E2E') {
       environment {
         GIT_CREDS = credentials('git')
