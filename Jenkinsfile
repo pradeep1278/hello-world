@@ -21,7 +21,7 @@ pipeline {
         }
     
      
-       stage('Building image') {
+       stage('Build image') {
     steps{
      
       script {
@@ -32,7 +32,7 @@ pipeline {
     }
   }
 
-stage('Deploy Image') {
+stage('Push Image') {
       steps{
         script {
          docker.withRegistry( "http://10.101.209.206:8761/dockertest", registryCredential ) {
@@ -49,7 +49,8 @@ stage('Deploy Image') {
         GIT_CREDS = credentials('git')
       }
       steps {
-        container('tools') {
+        input message:'Approve deployment?'
+        
           sh "git clone https://$GIT_CREDS_USR:$GIT_CREDS_PSW@github.com/alexmt/argocd-demo-deploy.git"
           sh "git config --global user.email 'ci@ci.com'"
 
@@ -57,7 +58,7 @@ stage('Deploy Image') {
             sh "cd ./e2e && kustomize edit set image alexmt/argocd-demo:${env.GIT_COMMIT}"
             sh "git commit -am 'Publish new version' && git push || echo 'no changes'"
           }
-        }
+        
       }
     }
 
