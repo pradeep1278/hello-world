@@ -21,16 +21,25 @@ pipeline {
         }
     
      
-       stage('BuildImage') {
-      environment {
-        DOCKERHUB_CREDS = credentials('dockerhub')
-      }
-      steps {
+       stage('Building image') {
+    steps{
+     
+      script {
         
-          sh "until docker ps; do sleep 3; done && docker build -t 10.101.209.206:8761/dockertest:${env.GIT_COMMIT} ."
-          // Publish new image
-          sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW && docker push 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
-       
+       dockerImage =docker.build registry + ":${env.GIT_COMMIT}"
+        docker.withRegistry( '', registryCredential ) {
+          dockerImage.push()}
+      }
+    }
+  }
+
+stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
       }
     }
        
