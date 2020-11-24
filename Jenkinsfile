@@ -2,7 +2,7 @@
 
 pipeline {  
   environment {
-    registry = "localhost:8761"
+    registry = "10.101.209.206:8761"
     registryCredential = "dockerhub"
     dockerImage = ''   
 }
