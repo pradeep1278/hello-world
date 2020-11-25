@@ -50,7 +50,7 @@ stage('Push Image') {
       }
       steps {
         input message:'Approve deployment?'
-           container ('kubectl') {
+         
           sh "git clone https://github.com/pradeep1278/argocd-demo-deploy.git"
           sh "git config --global user.email 'ci@ci.com'"
 
@@ -58,7 +58,7 @@ stage('Push Image') {
             sh "cd ./e2e && kustomize edit set image 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
             sh "git commit -am 'Publish new version' && git push || echo 'no changes'"
           }
-           }
+         
       }
     }
 
