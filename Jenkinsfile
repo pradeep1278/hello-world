@@ -77,9 +77,9 @@ stage('Push Image') {
        
     }
 
-    post {
-        always {
+   // post {
+        //always {
             //cleanWs()
-        }
-    }
+       // }
+   // }
 }
