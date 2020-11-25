@@ -79,7 +79,7 @@ stage('Push Image') {
 
     post {
         always {
-            cleanWs()
+            //cleanWs()
         }
     }
 }
