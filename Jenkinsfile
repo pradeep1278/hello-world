@@ -51,7 +51,7 @@ stage('Push Image') {
         GIT_CREDS = credentials('git')
       }
       steps {
-        input message:'Approve deployment?'
+        
          
           sh "git clone https://github.com/pradeep1278/argocd-demo-deploy.git"
           sh "git config --global user.email 'ci@ci.com'"
@@ -70,12 +70,12 @@ stage('Push Image') {
     stage('Deploy to Prod') {
       steps {
         input message:'Approve deployment?'
-        container('tools') {
+        
           dir("argocd-demo-deploy") {
-            sh "cd ./prod && kustomize edit set image alexmt/argocd-demo:${env.GIT_COMMIT}"
+            sh "cd ./prod && /usr/local/bin/kustomize edit set image alexmt/argocd-demo:${env.GIT_COMMIT}"
             sh "git commit -am 'Publish new version' && git push || echo 'no changes'"
           }
-        }
+       
       }
     }
         
