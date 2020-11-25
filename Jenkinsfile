@@ -58,9 +58,9 @@ stage('Push Image') {
 
           dir("argocd-demo-deploy") {
 
-            //sh "cd ./e2e && kustomize edit set image 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
-                TAG=${env.GIT_COMMIT}
-              sh "cd ./e2e &&   sed -i 's/TAG/${env.GIT_COMMIT}/g' ./kustomization.yaml "
+            sh "cd ./e2e && /usr/local/bin/kustomize edit set image 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
+            //    TAG=${env.GIT_COMMIT}
+             // sh "cd ./e2e &&   sed -i 's/TAG/${env.GIT_COMMIT}/g' ./kustomization.yaml "
             sh "git commit -am 'Publish new version' && git push || echo 'no changes'"
           }
          
