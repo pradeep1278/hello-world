@@ -73,7 +73,7 @@ stage('Push Image') {
         
           dir("argocd-demo-deploy") {
             sh "cd ./prod && /usr/local/bin/kustomize edit set image 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
-            sh "git commit -am 'Publish new version' && git push || echo 'no changes'"
+            sh "git commit -am 'Publish new version' && git push -u origin master || echo 'no changes'"
           }
        
       }
