@@ -54,7 +54,7 @@ stage('Push Image') {
         
          
           sh "git clone https://github.com/pradeep1278/argocd-demo-deploy.git"
-           sh  "git config --global credential.helper 'git'"
+          
           sh "git config --global user.email pradeep.kumar@sita.aero"
           sh "git config --global user.name 'pradeep1278'"
           sh "git config --global push.default matching"
@@ -65,7 +65,7 @@ stage('Push Image') {
             sh "cd ./e2e && /usr/local/bin/kustomize edit set image 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
             //    TAG=${env.GIT_COMMIT}
              // sh "cd ./e2e &&   sed -i 's/TAG/${env.GIT_COMMIT}/g' ./kustomization.yaml "
-            sh "git remote set-url origin https://github.com/pradeep1278/argocd-demo-deploy.git"
+         
             sh "git commit -am 'Publish new version' && git push origin master|| echo 'no changes'"
           }
          
