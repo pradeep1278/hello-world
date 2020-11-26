@@ -53,7 +53,7 @@ stage('Push Image') {
       steps {
         
          
-          sh "git clone https://pradeep1278:Kalu@2014:github.com/pradeep1278/argocd-demo-deploy.git"
+          sh "git clone https://$GIT_CREDS_USR:$GIT_CREDS_PSW@github.com/pradeep1278/argocd-demo-deploy.git"
           sh "git config --global user.email pradeep.kumar@sita.aero"
           sh "git config --global user.name 'pradeep1278'"
           sh "git config --global push.default matching"
