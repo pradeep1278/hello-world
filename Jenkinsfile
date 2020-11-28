@@ -53,14 +53,15 @@ stage('Push Image') {
       steps {
         
          
-          sh "git clone https://github.com/pradeep1278/argocd-demo-deploy.git"
-          
+         // sh "git clone https://github.com/pradeep1278/argocd-demo-deploy.git"
+          sh "git clone  https://github.com/pradeep1278/deployrepo.git" 
           sh "git config  user.email pradks.pradeep@gmail.com"
           sh "git config  user.name 'pradeep1278'"
           sh "git config --global push.default matching"
           sh "git config --global push.default simple"
 
-          dir("argocd-demo-deploy") {
+         // dir("argocd-demo-deploy") {
+          dir("deployrepo") {
 
             sh "cd ./e2e && /usr/local/bin/kustomize edit set image 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
             //    TAG=${env.GIT_COMMIT}
