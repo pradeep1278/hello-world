@@ -69,6 +69,8 @@ stage('Push Image') {
             sh "git commit -am 'Publish new version'" 
             //&& git push|| echo 'no changes'"
             sh('''
+               #!/usr/bin/env bash
+                        set +x
                 git config --local credential.helper "!f() { echo username=\\$GIT_CREDS_USR; echo password=\\$GIT_CREDS_PSW; }; f"
                 git push origin master
             ''')
