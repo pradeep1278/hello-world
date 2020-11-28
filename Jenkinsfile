@@ -48,7 +48,7 @@ stage('Push Image') {
     
     stage('Deploy E2E') {
       environment {
-        GIT_CREDS = credentials('git')
+        GIT_AUTH = credentials('git')
       }
       steps {
         
@@ -66,7 +66,13 @@ stage('Push Image') {
             //    TAG=${env.GIT_COMMIT}
              // sh "cd ./e2e &&   sed -i 's/TAG/${env.GIT_COMMIT}/g' ./kustomization.yaml "
          
-            sh "git commit -am 'Publish new version' && git push || echo 'no changes'"
+            sh "git commit -am 'Publish new version'"
+            //&& git push || echo 'no changes'"
+            
+            sh('''
+                    git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
+                    git push origin master
+                ''')
             
          }
       }
