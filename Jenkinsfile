@@ -72,7 +72,7 @@ stage('Push Image') {
             
             sh('''
                     git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
-                    git push origin master
+                    git push
                 ''')
             
          }
@@ -80,7 +80,7 @@ stage('Push Image') {
       }
   // }
 
-    stage('Deploy to Prod') {
+  /* stage('Deploy to Prod') {
       steps {
         input message:'Approve deployment?'
         
@@ -91,7 +91,7 @@ stage('Push Image') {
        
       }
     }
-        
+       */ 
        
     }
 
