@@ -55,8 +55,8 @@ stage('Push Image') {
          
           sh "git clone https://github.com/pradeep1278/argocd-demo-deploy.git"
           
-          sh "git config --global user.email pradks.pradeep@gmail.com"
-          sh "git config --global user.name 'pradeep1278'"
+          sh "git config  user.email pradks.pradeep@gmail.com"
+          sh "git config  user.name 'pradeep1278'"
           sh "git config --global push.default matching"
           sh "git config --global push.default simple"
 
@@ -66,7 +66,12 @@ stage('Push Image') {
             //    TAG=${env.GIT_COMMIT}
              // sh "cd ./e2e &&   sed -i 's/TAG/${env.GIT_COMMIT}/g' ./kustomization.yaml "
          
-            sh "git commit -am 'Publish new version' && git push|| echo 'no changes'"
+            sh "git commit -am 'Publish new version'" 
+            //&& git push|| echo 'no changes'"
+            sh('''
+                git config --local credential.helper "!f() { echo username=\\$GIT_CREDS_USR; echo password=\\$GIT_CREDS_PSW; }; f"
+                git push origin master
+            ''')
           }
          
       }
