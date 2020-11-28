@@ -71,7 +71,7 @@ stage('Push Image') {
          }
       }
       }
-   // }
+   }
 
     stage('Deploy to Prod') {
       steps {
