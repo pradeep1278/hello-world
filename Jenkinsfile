@@ -66,8 +66,7 @@ stage('Push Image') {
             //    TAG=${env.GIT_COMMIT}
              // sh "cd ./e2e &&   sed -i 's/TAG/${env.GIT_COMMIT}/g' ./kustomization.yaml "
          
-            sh "git commit -am 'Publish new version'" 
-            && git push|| echo 'no changes'"
+            sh "git commit -am 'Publish new version'" && git push|| echo 'no changes'"
             //sh('''
               
               //  git config --local credential.helper "!f() { echo username=\\$GIT_CREDS_USR; echo password=\\$GIT_CREDS_PSW; }; f"
