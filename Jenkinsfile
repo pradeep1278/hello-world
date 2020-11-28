@@ -67,15 +67,11 @@ stage('Push Image') {
              // sh "cd ./e2e &&   sed -i 's/TAG/${env.GIT_COMMIT}/g' ./kustomization.yaml "
          
             sh "git commit -am 'Publish new version'" && git push|| echo 'no changes'"
-            //sh('''
-              
-              //  git config --local credential.helper "!f() { echo username=\\$GIT_CREDS_USR; echo password=\\$GIT_CREDS_PSW; }; f"
-                //git push origin master
-            //''')
+            
          }
-         
       }
-    }
+      }
+   // }
 
     stage('Deploy to Prod') {
       steps {
