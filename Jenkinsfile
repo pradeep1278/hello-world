@@ -78,19 +78,37 @@ stage('Push Image') {
       }
       }
   // }
-
-  /* stage('Deploy to Prod') {
+//test
+   stage('Deploy to Prod') {
+     environment {
+        GIT_AUTH = credentials('git')
+      }
       steps {
         input message:'Approve deployment?'
-        
-          dir("argocd-demo-deploy") {
+          sh "git clone  https://github.com/pradeep1278/deployrepo.git" 
+          sh "git config  user.email pradks.pradeep@gmail.com"
+          sh "git config  user.name 'pradeep1278'"
+          sh "git config --global push.default matching"
+          sh "git config --global push.default simple"
+          
+           dir("deployrepo") {
+
             sh "cd ./prod && /usr/local/bin/kustomize edit set image 10.101.209.206:8761/dockertest:${env.GIT_COMMIT}"
-            sh "git commit -am 'Publish new version' && git push -u origin master || echo 'no changes'"
-          }
+            
+         
+            sh "git commit -am 'Publish new version'"
+           
+            
+            sh('''
+                    git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
+                    git push
+                ''')
+            
+         }
        
       }
     }
-       */ 
+       //test 
        
     }
 
