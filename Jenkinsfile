@@ -78,7 +78,7 @@ stage('Push Image') {
       }
       }
   // }
-//test
+
    stage('Deploy to Prod') {
      environment {
         GIT_AUTH = credentials('git')
@@ -108,7 +108,7 @@ stage('Push Image') {
        
       }
     }
-       //test 
+      
        
     }
 
