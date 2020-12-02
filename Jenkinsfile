@@ -85,7 +85,7 @@ stage('Push Image') {
       }
       steps {
         input message:'Approve deployment?'
-        //  sh "git clone  https://github.com/pradeep1278/deployrepo.git" 
+       
           sh "git config  user.email pradks.pradeep@gmail.com"
           sh "git config  user.name 'pradeep1278'"
           sh "git config --global push.default matching"
